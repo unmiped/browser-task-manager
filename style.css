@@ -37,11 +37,19 @@ body{
     height: 50px;
 }
 
+#task-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #new-task{
     display: flex;
-    flex-direction: row;
     justify-content: flex-start;
+    width: 100%;
+    max-width: 700px;
     font-size: 25px;
+    margin: 10px;
 }
 
 #new-task-cbox{
