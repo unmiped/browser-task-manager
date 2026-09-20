@@ -4,6 +4,11 @@ const taskInput = document.getElementById('task-input');
 const addtaskBtn = document.getElementById('add-task-btn');
 
 addtaskBtn.addEventListener('click', createNewTask)
+taskInput.addEventListener('keydown', function(event) {
+            if(event.key === 'Enter') {
+                createNewTask();
+            }
+        })
 
 function createNewTask() {
     const newTask = document.createElement('div');
@@ -19,6 +24,8 @@ function createNewTask() {
 
     newTaskText.textContent = taskInput.value;
     
+
+
     if(!taskInput.value.trim()) {
         alert('Invalid task text.');
     }

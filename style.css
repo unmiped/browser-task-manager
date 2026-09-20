@@ -1,13 +1,18 @@
+:root{
+    --bg: #0d1b2a;
+}
+
 body{
     margin: 0;
     padding: 25px;
-    background-color: #000;
+    background-color: var(--bg);
     color: #fff;
 }
 
 #title{
     font-size: 75px;
     text-align: center;
+    cursor: default;
 }
 
 #input{
@@ -16,21 +21,28 @@ body{
 }
 
 #task-input{
-    width: 300px;
+    width: 350px;
     height: 35px;
-    text-align: center;
+    text-align: left;
+    padding-left: 15px;
     outline: none;
     font-size: 20px;
     border-radius: 25px 0 0 25px;
     border: none;
+
 }
 
 #add-task-btn{
     width: 100px;
     font-size: 15px;
-    background-color: #dfdfdf;
+    background-color: #415a77;
+    color: #fff;
     border-radius: 0 25px 25px 0;
     border: none;
+}
+
+#add-task-btn:hover{
+    background-color: #778da9;
 }
 
 #space{
@@ -47,16 +59,15 @@ body{
     display: flex;
     justify-content: flex-start;
     width: 50%;
-    max-width: 1000px;
+    max-width: 1500px;
     font-size: 25px;
     margin: 10px;
     padding: 10px;
-    background-color: #00122b;
-    transition: background-color 0.1s ease-in-out;
+    background-color: #415a77;
 }
 
 #new-task:hover{
-    background-color: #001f47;
+    background-color: #778da9;
 }
 
 #new-task-cbox{
@@ -66,8 +77,9 @@ body{
     margin-right: 10px;
 }
 
-#task-text{
+#new-task-txt{
     font-size: 25px;
+    cursor: default;
 }
 
 #remove-task-btn{
