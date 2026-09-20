@@ -15,7 +15,6 @@ function createNewTask() {
     newTaskCbox.id = 'new-task-cbox';
     newTaskText.id = 'new-task-txt';
     removeTaskBtn.id = 'remove-task-btn';
-    removeTaskBtn.textContent = 'x';
     newTaskCbox.type = 'checkbox';
 
     newTaskText.textContent = taskInput.value;
@@ -31,12 +30,10 @@ function createNewTask() {
 
         newTaskCbox.addEventListener('change', () => {
             if(newTaskCbox.checked) {
-                    newTaskText.style.textDecoration = 'line-through';
-                    newTaskText.style.color = '#888';
-                }
+                newTaskText.classList.add('finished-task');
+            }
             else {
-                newTaskText.style.textDecoration = 'none';
-                newTaskText.style.color = '#fff';
+                newTaskText.classList.remove('finished-task');
             }
         })
 

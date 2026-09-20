@@ -46,14 +46,19 @@ body{
 #new-task{
     display: flex;
     justify-content: flex-start;
-    width: 100%;
-    max-width: 700px;
+    width: 50%;
+    max-width: 1000px;
     font-size: 25px;
     margin: 10px;
+    padding: 10px;
+    background-color: #001b3f;
 }
 
 #new-task-cbox{
     width: 25px;
+    border-radius: 50px;
+    margin-left: 0;
+    margin-right: 10px;
 }
 
 #task-text{
@@ -62,7 +67,16 @@ body{
 
 #remove-task-btn{
     border: none;
+    background: none;
     width: 30px;
-    font-size: 20px;
-    margin-left: 10px;
+    background-image: url(assets/icons/close.svg);
+    background-size: cover;
+    background-position: center;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.finished-task{
+    text-decoration: line-through;
+    color: #888;
 }
