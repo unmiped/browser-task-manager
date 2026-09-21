@@ -1,12 +1,15 @@
 :root{
-    --bg: #0d1b2a;
+    --bg: #000814;
+    --prim: #001d3d;
+    --sec: #003566;
+    --maintxt: #f1f1f1;
 }
 
 body{
     margin: 0;
     padding: 25px;
     background-color: var(--bg);
-    color: #fff;
+    color: var(--maintxt);
 }
 
 #title{
@@ -35,14 +38,14 @@ body{
 #add-task-btn{
     width: 100px;
     font-size: 15px;
-    background-color: #415a77;
-    color: #fff;
+    background-color: var(--prim);
+    color: var(--maintxt);
     border-radius: 0 25px 25px 0;
     border: none;
 }
 
 #add-task-btn:hover{
-    background-color: #778da9;
+    background-color: var(--sec);
 }
 
 #space{
@@ -63,11 +66,11 @@ body{
     font-size: 25px;
     margin: 10px;
     padding: 10px;
-    background-color: #415a77;
+    background-color: var(--prim);
 }
 
 #new-task:hover{
-    background-color: #778da9;
+    background-color: var(--sec);
 }
 
 #new-task-cbox{
@@ -95,5 +98,5 @@ body{
 
 .finished-task{
     text-decoration: line-through;
-    color: #888;
+    color: #6e8fb4;
 }
