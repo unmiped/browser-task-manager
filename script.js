@@ -1,54 +1,104 @@
-const taskList = document.getElementById('task-list');
+const clr = document.getElementById('clr-button');
 
+clr.addEventListener('click', () => {
+    localStorage.clear();
+    console.log('cleared localStorage');
+});
+
+const taskList = document.getElementById('tasks');
 const taskInput = document.getElementById('task-input');
-const addtaskBtn = document.getElementById('add-task-btn');
+const addtaskBtn = document.getElementById('add-task-button');
 
-addtaskBtn.addEventListener('click', createNewTask)
+addtaskBtn.addEventListener('click', myFunction);
+
 taskInput.addEventListener('keydown', function(event) {
-            if(event.key === 'Enter') {
-                createNewTask();
-            }
-        })
+    if (event.key === 'Enter') {
+        myFunction();
+    }
+});
 
-function createNewTask() {
-    const newTask = document.createElement('div');
-    const newTaskCbox = document.createElement('input');
-    const newTaskText = document.createElement('span');
-    const removeTaskBtn = document.createElement('button');
+const tasksData = [];
 
-    newTask.id = 'new-task';
-    newTaskCbox.id = 'new-task-cbox';
-    newTaskText.id = 'new-task-txt';
-    removeTaskBtn.id = 'remove-task-btn';
-    newTaskCbox.type = 'checkbox';
+const savedTasks = JSON.parse(localStorage.getItem('task')) || [];
 
-    newTaskText.textContent = taskInput.value;
-    
+for (const savedTask of savedTasks) {
+    const task = createTask(savedTask.content, savedTask.completed);
 
+    tasksData.push(task);
+    taskList.appendChild(task.element);
+}
 
-    if(!taskInput.value.trim()) {
+function myFunction() {
+    const inp = taskInput.value.trim();
+
+    if (!inp) {
         alert('Invalid task text.');
+        return;
     }
-    else {
-        newTask.appendChild(newTaskCbox);
-        newTask.appendChild(newTaskText);
-        newTask.appendChild(removeTaskBtn);
-        taskList.appendChild(newTask);
 
-        newTaskCbox.addEventListener('change', () => {
-            if(newTaskCbox.checked) {
-                newTaskText.classList.add('finished-task');
-            }
-            else {
-                newTaskText.classList.remove('finished-task');
-            }
-        })
+    const task = createTask(inp, false);
 
-        removeTaskBtn.addEventListener('click', () => {
-            const parentElement = removeTaskBtn.parentElement;
-            taskList.removeChild(parentElement);
-        })
-    }
+    tasksData.push(task);
+    taskList.appendChild(task.element);
+
+    saveTasks();
 
     taskInput.value = '';
+}
+
+function createTask(content, completed) {
+    const element = document.createElement('div');
+    element.className = 'task';
+    element.innerHTML = `
+        <input type="checkbox" class="task-checkbox">
+        <span class="task-content">${content}</span>
+        <button class="remove-task-button"></button>
+    `;
+
+    const task = {
+        element: element,
+        content: content,
+        completed: completed
+    };
+
+    const rmvbtn = element.querySelector('.remove-task-button');
+    rmvbtn.addEventListener('click', () => {
+        const index = tasksData.indexOf(task);
+        if (index !== -1) {
+            tasksData.splice(index, 1);
+        }
+        element.remove();
+
+        saveTasks();
+    });
+
+    const cbox = element.querySelector('.task-checkbox');
+    cbox.checked = completed;
+    if (completed) {
+        element.classList.add('completed-task');
+    }
+    cbox.addEventListener('change', () => {
+        task.completed = cbox.checked;
+        if (task.completed) {
+            element.classList.add('completed-task');
+        }
+        else {
+            element.classList.remove('completed-task');
+        }
+
+        saveTasks();
+    });
+
+    return task;
+}
+
+function saveTasks() {
+    const dataToSave = tasksData.map(task => {
+        return {
+            content: task.content,
+            completed: task.completed
+        };
+    });
+
+    localStorage.setItem('task', JSON.stringify(dataToSave));
 }
