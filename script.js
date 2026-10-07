@@ -9,11 +9,11 @@ const taskList = document.getElementById('tasks');
 const taskInput = document.getElementById('task-input');
 const addtaskBtn = document.getElementById('add-task-button');
 
-addtaskBtn.addEventListener('click', myFunction);
+addtaskBtn.addEventListener('click', handleTaskCreation);
 
 taskInput.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
-        myFunction();
+        handleTaskCreation();
     }
 });
 
@@ -28,7 +28,11 @@ for (const savedTask of savedTasks) {
     taskList.appendChild(task.element);
 }
 
-function myFunction() {
+function appendElement() {
+    
+}
+
+function handleTaskCreation() {
     const inp = taskInput.value.trim();
 
     if (!inp) {
@@ -47,13 +51,14 @@ function myFunction() {
 }
 
 function createTask(content, completed) {
-    const element = document.createElement('div');
-    element.className = 'task';
-    element.innerHTML = `
-        <input type="checkbox" class="task-checkbox">
-        <span class="task-content">${content}</span>
-        <button class="remove-task-button"></button>
-    `;
+    const element = document.createElement('div'); element.className = 'task';
+    const checkbox = document.createElement('input'); checkbox.type = 'checkbox';
+    const taskContent = document.createElement('span'); taskContent.className = 'task-content';
+    const editTaskButton = document.createElement('button'); editTaskButton.className = 'edit-task-button';
+    const removeTaskButton = document.createElement('button'); removeTaskButton.className = 'remove-task-button';
+    taskContent.textContent = content;
+    
+    element.append(checkbox, taskContent, editTaskButton, removeTaskButton);
 
     const task = {
         element: element,
@@ -61,30 +66,41 @@ function createTask(content, completed) {
         completed: completed
     };
 
-    const rmvbtn = element.querySelector('.remove-task-button');
-    rmvbtn.addEventListener('click', () => {
-        const index = tasksData.indexOf(task);
-        if (index !== -1) {
-            tasksData.splice(index, 1);
-        }
-        element.remove();
-
-        saveTasks();
-    });
-
-    const cbox = element.querySelector('.task-checkbox');
-    cbox.checked = completed;
+    checkbox.checked = completed;
     if (completed) {
         element.classList.add('completed-task');
     }
-    cbox.addEventListener('change', () => {
-        task.completed = cbox.checked;
+    checkbox.addEventListener('change', () => {
+        task.completed = checkbox.checked;
         if (task.completed) {
             element.classList.add('completed-task');
         }
         else {
             element.classList.remove('completed-task');
         }
+
+        saveTasks();
+    });
+
+    editTaskButton.addEventListener('click', () => {
+        console.log('edit button clicked.');
+        const editInput = document.createElement('input'); editInput.type = 'text'; editInput.className = 'edit-input';
+        taskContent.replaceWith(editInput);
+        
+        editInput.addEventListener('keydown', function(event) {
+            if(event.key === 'Enter') {
+                taskContent.textContent = editInput.value;
+                editInput.replaceWith(taskContent);
+            }
+        })
+    })
+
+    removeTaskButton.addEventListener('click', () => {
+        const index = tasksData.indexOf(task);
+        if (index !== -1) {
+            tasksData.splice(index, 1);
+        }
+        element.remove();
 
         saveTasks();
     });

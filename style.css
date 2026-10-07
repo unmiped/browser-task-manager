@@ -89,12 +89,36 @@ body{
 .remove-task-button{
     border: none;
     background: none;
+    padding: 0;
     width: 30px;
     background-image: url(assets/icons/close.svg);
     background-size: cover;
     background-position: center;
+    margin-left: 0;
+    cursor: pointer;
+}
+
+.edit-task-button{
+    border: none;
+    background: none;
+    width: 30px;
+    background-image: url(assets/icons/edit.svg);
+    background-size: cover;
+    background-position: center;
     margin-left: auto;
     cursor: pointer;
+}
+
+.edit-input{
+    width: 500px;
+    height: 25px;
+    text-align: left;
+    margin-left: 10px;
+    padding-left: 15px;
+    outline: none;
+    font-size: 20px;
+    border-radius: 25px;
+    border: none;
 }
 
 .completed-task{
