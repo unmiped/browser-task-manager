@@ -83,13 +83,20 @@ function createTask(content, completed) {
     });
 
     editTaskButton.addEventListener('click', () => {
-        console.log('edit button clicked.');
         const editInput = document.createElement('input'); editInput.type = 'text'; editInput.className = 'edit-input';
         taskContent.replaceWith(editInput);
+        editInput.focus();
         
         editInput.addEventListener('keydown', function(event) {
-            if(event.key === 'Enter') {
-                taskContent.textContent = editInput.value;
+            const desiredInput = editInput.value.trim();
+            if(event.key === 'Enter' && desiredInput != '') {
+                taskContent.textContent = desiredInput;
+                task.content = desiredInput;
+                editInput.replaceWith(taskContent);
+
+                saveTasks();
+            }
+            if(event.key === 'Escape') {
                 editInput.replaceWith(taskContent);
             }
         })
