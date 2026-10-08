@@ -15,7 +15,6 @@ const tasksData = [];
 
 addtaskBtn.addEventListener('click', handleTaskCreation);
 
-
 function getTaskStats() {
     const total = tasksData.length;
     const completed = tasksData.filter(task => task.completed).length;
@@ -32,9 +31,7 @@ function getTaskStats() {
     stats.textContent = `Total: ${taskStats.total}, Active: ${taskStats.active}, Completed: ${taskStats.completed}`;
 
     return taskStats;
-    
 }
-
 
 const savedTaskStats = JSON.parse(localStorage.getItem('taskStats'));
 
@@ -43,7 +40,6 @@ taskInput.addEventListener('keydown', function(event) {
         handleTaskCreation();
     }
 });
-
 
 for (const task of tasksData) {
 }
@@ -59,15 +55,11 @@ for (const savedTask of savedTasks) {
 
 getTaskStats();
 
-function appendElement() {
-    
-}
-
 function handleTaskCreation() {
     const inp = taskInput.value.trim();
 
     if (!inp) {
-        alert('Invalid task text.');
+        showNotification('Invalid task input.', 'error');
         return;
     }
 
@@ -84,7 +76,7 @@ function handleTaskCreation() {
 
 function createTask(content, completed) {
     const element = document.createElement('div'); element.className = 'task';
-    const checkbox = document.createElement('input'); checkbox.type = 'checkbox';
+    const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.className = 'task-checkbox';
     const taskContent = document.createElement('span'); taskContent.className = 'task-content';
     const editTaskButton = document.createElement('button'); editTaskButton.className = 'edit-task-button';
     const removeTaskButton = document.createElement('button'); removeTaskButton.className = 'remove-task-button';
@@ -159,4 +151,19 @@ function saveTasks() {
     });
 
     localStorage.setItem('task', JSON.stringify(dataToSave));
+}
+
+function showNotification(message, type = 'info', duration = 3000) {
+  const container = document.getElementById('popup-container');
+  if (!container) return;
+
+  const card = document.createElement('div');
+  card.className = `popup-card ${type}`;
+  card.innerText = message;
+
+  container.appendChild(card);
+
+  setTimeout(() => {
+    setTimeout(() => card.remove(), 300);
+  }, duration);
 }

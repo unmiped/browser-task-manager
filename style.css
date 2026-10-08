@@ -49,6 +49,12 @@ body{
     background-color: var(--sec);
 }
 
+#task-stats{
+    display: flex;
+    justify-self: center;
+    padding: 20px;
+}
+
 #space{
     height: 50px;
 }
@@ -125,3 +131,26 @@ body{
     text-decoration: line-through;
     color: var(--sectxt);
 }
+
+.popup-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.popup-card {
+  min-width: 280px;
+  max-width: 400px;
+  padding: 16px;
+  background-color: var(--prim);
+  color: var(--primtxt);
+  border-left: 5px solid #fff;
+}
+
+.popup-card.error { border-left-color: #ef4444; }
+.popup-card.success { border-left-color: #22c55e; }
+.popup-card.info { border-left-color: #3b82f6; }
