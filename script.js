@@ -1,15 +1,42 @@
 const clr = document.getElementById('clr-button');
 
 clr.addEventListener('click', () => {
-    localStorage.clear();
+     localStorage.clear();
+    tasksData.length = 0;
+    taskList.innerHTML = '';
+    getTaskStats();
     console.log('cleared localStorage');
 });
 
 const taskList = document.getElementById('tasks');
 const taskInput = document.getElementById('task-input');
 const addtaskBtn = document.getElementById('add-task-button');
+const tasksData = [];
 
 addtaskBtn.addEventListener('click', handleTaskCreation);
+
+
+function getTaskStats() {
+    const total = tasksData.length;
+    const completed = tasksData.filter(task => task.completed).length;
+    const active = total - completed;
+    const taskStats = {
+        total: total,
+        active: active,
+        completed: completed
+    };
+
+    localStorage.setItem('taskStats', JSON.stringify(taskStats));
+    
+    const stats = document.getElementById('task-stats');
+    stats.textContent = `Total: ${taskStats.total}, Active: ${taskStats.active}, Completed: ${taskStats.completed}`;
+
+    return taskStats;
+    
+}
+
+
+const savedTaskStats = JSON.parse(localStorage.getItem('taskStats'));
 
 taskInput.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
@@ -17,16 +44,20 @@ taskInput.addEventListener('keydown', function(event) {
     }
 });
 
-const tasksData = [];
+
+for (const task of tasksData) {
+}
 
 const savedTasks = JSON.parse(localStorage.getItem('task')) || [];
 
 for (const savedTask of savedTasks) {
     const task = createTask(savedTask.content, savedTask.completed);
-
+    
     tasksData.push(task);
     taskList.appendChild(task.element);
 }
+
+getTaskStats();
 
 function appendElement() {
     
@@ -46,6 +77,7 @@ function handleTaskCreation() {
     taskList.appendChild(task.element);
 
     saveTasks();
+    getTaskStats();
 
     taskInput.value = '';
 }
@@ -80,6 +112,7 @@ function createTask(content, completed) {
         }
 
         saveTasks();
+        getTaskStats();
     });
 
     editTaskButton.addEventListener('click', () => {
@@ -95,6 +128,7 @@ function createTask(content, completed) {
                 editInput.replaceWith(taskContent);
 
                 saveTasks();
+                getTaskStats();
             }
             if(event.key === 'Escape') {
                 editInput.replaceWith(taskContent);
@@ -110,6 +144,7 @@ function createTask(content, completed) {
         element.remove();
 
         saveTasks();
+        getTaskStats();
     });
 
     return task;
